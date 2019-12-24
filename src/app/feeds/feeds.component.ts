@@ -1,5 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FeedModel } from './feed.model';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { FeedModel } from './models/feed.model';
+import { FeedService } from './services/feed.service';
+import { take } from 'rxjs/operators';
+import { FeedPaginationModel } from './models/feed-pagination.model';
+import { FeedsResponse } from './models/feeds-response.model';
 
 @Component({
   selector: 'app-feeds',
@@ -8,31 +12,32 @@ import { FeedModel } from './feed.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeedsComponent implements OnInit {
-  elMundoFeeds: FeedModel[];
-  elPaisFeeds: FeedModel[];
+  elMundoFeeds: FeedModel[] = [];
+  elPaisFeeds: FeedModel[] = [];
 
-  constructor() { }
+  constructor(private feedService: FeedService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.elMundoFeeds = [
-      {
-        title: 'Test',
-        body: 'cuerpo',
-        source: 'adafs',
-        publisher: 'ejemplo',
-        image: ''
-      }
-    ];
+    this.getDailyFeeds();
+  }
 
-    this.elPaisFeeds = [
-      {
-        title: 'Test',
-        body: 'cuerpo',
-        source: 'adafs',
-        publisher: 'ejemplo',
-        image: ''
+  getDailyFeeds() {
+    this.feedService.getDailyFeeds().subscribe((res: FeedsResponse) => {
+      if (res.data.docs && res.data.docs.length > 0) {
+        this.organizeDailyFeeds(res.data.docs);
       }
-    ];
+    });
+  }
+
+  organizeDailyFeeds(feeds: FeedModel[]) {
+    feeds.forEach((feed: FeedModel) => {
+      if (feed.source.toLowerCase().includes('elpais')) {
+        this.elPaisFeeds.push(feed);
+      } else if (feed.source.toLowerCase().includes('elmundo')) {
+        this.elMundoFeeds.push(feed);
+      }
+    });
+    this.cdr.markForCheck();
   }
 
 }

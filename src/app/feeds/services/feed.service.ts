@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { FeedPaginationModel } from '../models/feed-pagination.model';
+import { FeedsResponse } from '../models/feeds-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +14,8 @@ export class FeedService {
 
   constructor(private http: HttpClient) { }
 
-
-  getTodayFeeds() {
-    return this.http.get('/feeds').pipe(take(1));
+  getDailyFeeds(): Observable<FeedsResponse> {
+    return this.http.get<FeedsResponse>(this.baseUrl + 'feed').pipe(take(1));
   }
 
 }
