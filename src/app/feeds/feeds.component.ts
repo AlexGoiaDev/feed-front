@@ -4,6 +4,8 @@ import { FeedService } from './services/feed.service';
 import { take } from 'rxjs/operators';
 import { FeedPaginationModel } from './models/feed-pagination.model';
 import { FeedsResponse } from './models/feeds-response.model';
+import { NbDialogService } from '@nebular/theme';
+import { NewFeedComponent } from './new-feed/new-feed.component';
 
 @Component({
   selector: 'app-feeds',
@@ -15,14 +17,17 @@ export class FeedsComponent implements OnInit {
   elMundoFeeds: FeedModel[] = [];
   elPaisFeeds: FeedModel[] = [];
 
-  constructor(private feedService: FeedService, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private feedService: FeedService,
+    private dialogService: NbDialogService,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getDailyFeeds();
   }
 
   getDailyFeeds() {
-    this.feedService.getDailyFeeds().subscribe((res: FeedsResponse) => {
+    this.feedService.getDailyFeeds().pipe(take(1)).subscribe((res: FeedsResponse) => {
       if (res.data.docs && res.data.docs.length > 0) {
         this.organizeDailyFeeds(res.data.docs);
       }
@@ -39,5 +44,11 @@ export class FeedsComponent implements OnInit {
     });
     this.cdr.markForCheck();
   }
+
+  openNewFeed() {
+    this.dialogService.open(NewFeedComponent, {
+    });
+  }
+
 
 }
