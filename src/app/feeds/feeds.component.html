@@ -4,11 +4,11 @@
     <button nbButton (click)="openNewFeed()">Añadir feed</button>
   </nb-layout-header>
   <nb-layout-column class="colored-column-danger">
-    <app-feed-card *ngFor="let feed of elPaisFeeds" [feed]="feed" color='warning'>
+    <app-feed-card *ngFor="let feed of elPaisFeeds" [feed]="feed" color='warning' (click)="editOrDelete(feed)">
     </app-feed-card>
   </nb-layout-column>
   <nb-layout-column class="colored-column-warning">
-    <app-feed-card *ngFor="let feed of elMundoFeeds" [feed]="feed">
+    <app-feed-card *ngFor="let feed of elMundoFeeds" [feed]="feed" (click)="editOrDelete(feed)">
     </app-feed-card>
   </nb-layout-column>
 </nb-layout>

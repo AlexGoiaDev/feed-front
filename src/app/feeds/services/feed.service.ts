@@ -13,7 +13,7 @@ export class FeedService {
   constructor(private http: HttpClient) { }
 
   getDailyFeeds(): Observable<FeedsResponse> {
-    return this.http.get<FeedsResponse>(this.baseUrl + 'feed');
+    return this.http.get<FeedsResponse>(this.baseUrl + 'feed?limit=10');
   }
 
   addByUrl(url: string) {

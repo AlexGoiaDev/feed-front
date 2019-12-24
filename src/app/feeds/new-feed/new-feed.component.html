@@ -1,3 +1,11 @@
-<div>
-  <p>Holi</p>
-</div>
+<nb-card>
+  <nb-card-header>Añadir feed por url</nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="newFeedForm">
+      <input type="text" formControlName="url" nbInput fullWidth placeholder="Url">
+    </form>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton status="primary" (click)="addUrl()">Añadir</button>
+  </nb-card-footer>
+</nb-card>
