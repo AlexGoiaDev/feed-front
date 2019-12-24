@@ -2,7 +2,6 @@
   <nb-layout-header>
       <h3>DailyTrends</h3>
       <button nbButton (click)="openNewFeed()">Añadir feed</button>
-
   </nb-layout-header>
   <nb-layout-column class="colored-column-danger">
     <app-feed-card *ngFor="let feed of elPaisFeeds" [feed]="feed" color='warning' (click)="editOrDelete(feed)">
