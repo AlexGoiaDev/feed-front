@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditDeleteComponent } from './edit-delete.component';
-import { NbButtonModule } from '@nebular/theme';
+import { NbButtonModule, NbInputModule, NbLayoutModule } from '@nebular/theme';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -9,7 +10,10 @@ import { NbButtonModule } from '@nebular/theme';
   declarations: [EditDeleteComponent],
   imports: [
     CommonModule,
-    NbButtonModule
+    NbButtonModule,
+    ReactiveFormsModule,
+    NbInputModule,
+    NbLayoutModule
   ],
   entryComponents: [
     EditDeleteComponent

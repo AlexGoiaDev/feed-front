@@ -1,8 +1,12 @@
-<form>
+<form [formGroup]="feedForm">
+  <input type="text" formControlName="title" nbInput fullWidth placeholder="Título">
+  <textarea type="text" formControlName="body" nbInput fullWidth placeholder="Cuerpo"></textarea>
+  <input type="text" formControlName="publisher" nbInput fullWidth placeholder="Escrito por">
+  <input type="text" formControlName="source" nbInput fullWidth placeholder="Url">
 
 </form>
-
-<button nbButton status="danger" >Eliminar</button>
-
-<button nbButton status="primary">Editar</button>
+<div class="button-container">
+  <button nbButton status="danger">Eliminar</button>
+  <button nbButton status="primary">Editar</button>
+</div>
 
