@@ -1,6 +1,6 @@
 import { FeedPaginationModel } from './feed-pagination.model';
 
-export interface FeedsResponse {
+export interface FeedsPaginationResponse {
   status: number;
   data: FeedPaginationModel;
   message: string;

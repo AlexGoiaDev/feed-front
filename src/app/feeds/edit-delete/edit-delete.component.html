@@ -6,8 +6,9 @@
 
 </form>
 <nb-alert status="success" *ngIf="showEditSuccess">Se ha actualizado con éxito</nb-alert>
+<nb-alert status="success" *ngIf="showDeleteSuccess">Eliminado con éxito</nb-alert>
 <div class="button-container">
-  <button nbButton status="danger" (click)="delte()">Eliminar</button>
+  <button nbButton status="danger" (click)="delete()">Eliminar</button>
   <button nbButton status="primary" (click)="edit()">Editar</button>
 </div>
 

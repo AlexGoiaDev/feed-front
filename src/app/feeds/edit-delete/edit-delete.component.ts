@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FeedModel } from '../models/feed.model';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NbWindowRef } from '@nebular/theme';
-import { FeedsComponent } from '../feeds.component';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { FeedService } from '../services/feed.service';
 import { take } from 'rxjs/operators';
+import { FeedModel } from '../models/feed.model';
+import { FeedService } from '../services/feed.service';
+import { FeedResponse } from '../models/feed-response.model';
 
 @Component({
   selector: 'app-edit-delete',
@@ -17,7 +17,7 @@ export class EditDeleteComponent implements OnInit {
 
   feedForm: FormGroup;
   showEditSuccess: boolean;
-
+  showDeleteSuccess: boolean;
 
   constructor(
     protected windowRef: NbWindowRef,
@@ -66,7 +66,17 @@ export class EditDeleteComponent implements OnInit {
   }
 
   delete() {
-
+    this.feedService.deleteFeed(this.feed._id).pipe(take(1))
+      .subscribe((res: FeedResponse) => {
+        if (res && res.data) {
+          this.showDeleteSuccess = true;
+          setTimeout(() => {
+            this.showDeleteSuccess = false;
+            this.feed = null;
+            this.windowRef.close();
+          }, 1500);
+        }
+      });
   }
 
 }

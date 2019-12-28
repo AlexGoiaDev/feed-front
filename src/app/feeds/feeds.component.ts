@@ -3,11 +3,12 @@ import { FeedModel } from './models/feed.model';
 import { FeedService } from './services/feed.service';
 import { take } from 'rxjs/operators';
 import { FeedPaginationModel } from './models/feed-pagination.model';
-import { FeedsResponse } from './models/feeds-response.model';
 import { NbDialogService, NbWindowService } from '@nebular/theme';
 import { NewFeedComponent } from './new-feed/new-feed.component';
 import { TYPED_NULL_EXPR } from '@angular/compiler/src/output/output_ast';
 import { EditDeleteComponent } from './edit-delete/edit-delete.component';
+import { FeedsPaginationResponse } from './models/feeds-response.model';
+import { FeedResponse } from './models/feed-response.model';
 
 @Component({
   selector: 'app-feeds',
@@ -30,7 +31,10 @@ export class FeedsComponent implements OnInit {
   }
 
   getDailyFeeds() {
-    this.feedService.getDailyFeeds().pipe(take(1)).subscribe((res: FeedsResponse) => {
+    this.elMundoFeeds = [];
+    this.elPaisFeeds = [];
+    this.cdr.markForCheck();
+    this.feedService.getDailyFeeds().pipe(take(1)).subscribe((res: FeedsPaginationResponse) => {
       if (res.data.docs && res.data.docs.length > 0) {
         this.organizeDailyFeeds(res.data.docs);
       }
@@ -50,7 +54,7 @@ export class FeedsComponent implements OnInit {
 
   openNewFeed() {
     this.dialogService.open(NewFeedComponent, {
-    }).onClose.pipe(take(1)).subscribe(res => {
+    }).onClose.pipe(take(1)).subscribe((res: string) => {
       this.addNewFeed(res);
     });
   }
@@ -60,13 +64,11 @@ export class FeedsComponent implements OnInit {
       title: 'Editar o eliminar',
       context: { feed }
     })
-    .onClose.pipe(take(1)).subscribe(res => {
-      console.log('Res');
-    });
+    .onClose.pipe(take(1)).subscribe(() => this.getDailyFeeds());
   }
 
-  addNewFeed(url) {
-    this.feedService.addByUrl(url).pipe(take(1)).subscribe((res: any) => {
+  addNewFeed(url: string) {
+    this.feedService.addByUrl(url).pipe(take(1)).subscribe((res: FeedResponse) => {
       if (res && res.data) {
         this.organizeDailyFeeds([{ ...res.data }]);
       }
