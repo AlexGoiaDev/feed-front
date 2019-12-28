@@ -1,8 +1,8 @@
 export interface FeedModel {
-  _id: string;
+  _id?: string;
   title: string;
   body: string;
-  image: string;
+  image?: string;
   source: string;
   publisher: string;
 }

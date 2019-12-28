@@ -25,7 +25,7 @@ export class FeedService {
     return this.http.delete(this.baseUrl + `feed/${id}`);
   }
 
-  editFeed(changes: any, id: string) {
+  editFeed(id: string, changes: any) {
     return this.http.put(this.baseUrl  + `feed/${id}`, changes);
   }
 

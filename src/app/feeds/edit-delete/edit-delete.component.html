@@ -5,8 +5,9 @@
   <input type="text" formControlName="source" nbInput fullWidth placeholder="Url">
 
 </form>
+<nb-alert status="success" *ngIf="showEditSuccess">Se ha actualizado con éxito</nb-alert>
 <div class="button-container">
-  <button nbButton status="danger">Eliminar</button>
-  <button nbButton status="primary">Editar</button>
+  <button nbButton status="danger" (click)="delte()">Eliminar</button>
+  <button nbButton status="primary" (click)="edit()">Editar</button>
 </div>
 

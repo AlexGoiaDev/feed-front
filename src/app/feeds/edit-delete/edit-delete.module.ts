@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditDeleteComponent } from './edit-delete.component';
-import { NbButtonModule, NbInputModule, NbLayoutModule } from '@nebular/theme';
+import { NbButtonModule, NbInputModule, NbLayoutModule, NbAlertModule } from '@nebular/theme';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FeedService } from '../services/feed.service';
 
@@ -14,7 +14,8 @@ import { FeedService } from '../services/feed.service';
     NbButtonModule,
     ReactiveFormsModule,
     NbInputModule,
-    NbLayoutModule
+    NbLayoutModule,
+    NbAlertModule
   ],
   entryComponents: [
     EditDeleteComponent

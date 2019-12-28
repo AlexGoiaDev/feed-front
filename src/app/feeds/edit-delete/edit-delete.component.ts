@@ -3,6 +3,8 @@ import { FeedModel } from '../models/feed.model';
 import { NbWindowRef } from '@nebular/theme';
 import { FeedsComponent } from '../feeds.component';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FeedService } from '../services/feed.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-delete',
@@ -14,10 +16,13 @@ export class EditDeleteComponent implements OnInit {
   feed: FeedModel;
 
   feedForm: FormGroup;
+  showEditSuccess: boolean;
+
 
   constructor(
     protected windowRef: NbWindowRef,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private feedService: FeedService
   ) {
     this.feedForm = this.formBuilder.group({
       title: new FormControl('', [Validators.required]),
@@ -25,11 +30,11 @@ export class EditDeleteComponent implements OnInit {
       publisher: new FormControl('', [Validators.required]),
       source: new FormControl('', [Validators.required])
     });
+    this.showEditSuccess = false;
 
   }
 
   ngOnInit() {
-
     this.fillForm();
   }
 
@@ -40,8 +45,28 @@ export class EditDeleteComponent implements OnInit {
     this.feedForm.get('publisher').setValue(this.feed.publisher);
   }
 
+  edit() {
+    if (this.feedForm.valid) {
+      const feedChanges: FeedModel = {
+        title: this.feedForm.get('title').value,
+        body: this.feedForm.get('body').value,
+        source: this.feedForm.get('source').value,
+        publisher: this.feedForm.get('publisher').value
+      };
+      this.feedService.editFeed(this.feed._id, feedChanges).pipe(take(1))
+        .subscribe((res: any) => {
+          if (res && res.data) {
+            this.showEditSuccess = true;
+            setTimeout(() => {
+              this.showEditSuccess = false;
+            }, 1500);
+          }
+        });
+    }
+  }
+
   delete() {
-    this.windowRef.close();
+
   }
 
 }
