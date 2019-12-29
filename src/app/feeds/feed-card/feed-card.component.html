@@ -1,6 +1,7 @@
 <nb-card [status]="color">
   <nb-card-header>{{feed.title}}</nb-card-header>
   <nb-card-body>
+    <img *ngIf="feed.image" [src]="feed.image" width="auto">
     {{getSummaryBody()}}
   </nb-card-body>
   <nb-card-footer>Escrito por: <i>{{feed.publisher}}</i> | <a [href]="feed.source">{{getSourceName()}}</a></nb-card-footer>
